@@ -13,7 +13,17 @@
 <body>
 
     <header>
-        <h1>Caafi Pharmacy</h1>
+        <div class="container">
+            <h1>Caafi Pharmacy</h1>
+            <nav>
+                <ul class="nav">
+                
+                    <li class="nav-item"><a class="nav-link" href="{{ route('medicines.index') }}">Medicines</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('medicines.create') }}">Add Medicine</a></li>
+                </ul>
+            </nav>
+        </div>
+        
     </header>
 
     <main>

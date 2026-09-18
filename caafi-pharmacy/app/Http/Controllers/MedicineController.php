@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Medicine;
 
 class MedicineController extends Controller
 {
@@ -11,7 +12,10 @@ class MedicineController extends Controller
      */
     public function index()
     {
-        //
+        $medicines = Medicine::all();
+        return view ("medicines.index", compact("medicines"));
+
+    
     }
 
     /**
@@ -27,7 +31,14 @@ class MedicineController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'quantity' => 'required|integer|min:0',
+            'expiry_date' => 'required|date',
+        ]);
+        Medicine::create($validated);
+        return redirect()->route('medicines.index');
     }
 
     /**

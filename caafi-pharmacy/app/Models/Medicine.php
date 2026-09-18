@@ -13,6 +13,7 @@ class Medicine extends Model
         'description',
         'quantity',
         'expiry_date', 
+
       
     ];
 }
