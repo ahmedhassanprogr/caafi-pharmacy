@@ -27,7 +27,7 @@ rule 3: Expiring soon is defined as any medicine that will expire within the nex
 
 ## Entities —  "
 entity 1: Stock
-entity 2: sales
+entity 2: category
 
 
 
