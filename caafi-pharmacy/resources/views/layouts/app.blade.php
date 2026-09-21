@@ -14,13 +14,24 @@
 
     <header>
         <div class="container">
-            <h1>Caafi Pharmacy</h1>
+            
             <nav>
                 <ul class="nav">
                 
                     <li class="nav-item"><a class="nav-link" href="{{ route('medicines.index') }}">Medicines</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('medicines.create') }}">Add Medicine</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('auth.showLoginForm') }}">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('auth.showRegisterForm') }}">Register</a></li>
+
+                    
+
                 </ul>
+                @guest
+                    <form method="POST" action="{{ route('auth.logout') }}">
+                        @csrf
+                        <button type="submit" class="btn btn-link nav-link">Logout</button>
+                    </form>
+                @endguest
             </nav>
         </div>
         

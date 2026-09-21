@@ -16,11 +16,40 @@
                 <label for="name" class="form-label">Medicine Name</label>
                 <input type="text" class="form-control" id="name" name="name" required>
                 </div>
+                
 
                 <div class="mb-3">
                     <label for="description" class="form-label">Description</label>
                     <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter medicine description"></textarea>
                 </div>
+                <div class="mb-3">
+    <label for="category_id" class="form-label">Category</label>
+
+    <select
+        name="category_id"
+        id="category_id"
+        class="form-select @error('category_id') is-invalid @enderror"
+    >
+        <option value="">Select Category</option>
+
+        @foreach($categories as $category)
+            <option
+                value="{{ $category->id }}"
+                @selected(old('category_id') == $category->id)
+            >
+                {{ $category->name }}
+            </option>
+        @endforeach
+    </select>
+
+    @error('category_id')
+        <div class="invalid-feedback">
+            {{ $message }}
+        </div>
+    @enderror
+</div>
+                
+                
 
                 <div class="mb-3">
                 <label for="quantity" class="form-label">Quantity</label>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Medicine;
+use App\Models\Category;
 
 class MedicineController extends Controller
 {
@@ -21,10 +22,16 @@ class MedicineController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        return view("medicines.create");
-    }
+    
+    
+       public function create()
+{
+    $categories = Category::orderBy('name')->get();
+
+    return view('medicines.create', compact('categories'));
+}
+
+    
 
     /**
      * Store a newly created resource in storage.
@@ -32,6 +39,7 @@ class MedicineController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'category_id' => 'nullable|exists:categories,id',
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'quantity' => 'required|integer|min:0',
@@ -46,7 +54,8 @@ class MedicineController extends Controller
      */
     public function show(string $id)
     {
-        //
+      $medicine = Medicine::findOrFail($id); 
+      return view('medicines.show', compact('medicine'));
     }
 
     /**
@@ -54,7 +63,8 @@ class MedicineController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $medicine = Medicine::findOrFail($id); 
+        return view('medicines.edit', compact('medicine'));
     }
 
     /**
@@ -62,7 +72,14 @@ class MedicineController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $medicine = Medicine::findOrFail($id); 
+        $validated = $request->validate([ 
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string', 
+            'quantity' => 'required|integer|min:0', 
+            'expiry_date' => 'required|date', ]); 
+            $medicine->update($validated); 
+            return redirect() ->route('medicines.index') ->with('success', 'Medicine updated successfully.');
     }
 
     /**
@@ -70,6 +87,9 @@ class MedicineController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $medicine = Medicine::findOrFail($id);
+          $medicine->delete();
+         return redirect() ->route('medicines.index') ->with('success', 
+        'Medicine deleted successfully.');
     }
 }

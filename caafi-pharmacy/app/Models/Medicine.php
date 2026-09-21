@@ -9,6 +9,7 @@ class Medicine extends Model
     //
 
     protected $fillable = [
+        'category_id',
         'name',
         'description',
         'quantity',
@@ -16,4 +17,9 @@ class Medicine extends Model
 
       
     ];
+
+    public function category(): BelongsTo
+{
+    return $this->belongsTo(Category::class);
+}
 }
